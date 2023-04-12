@@ -12,4 +12,9 @@ public class Booking implements Serializable {
     public String getBookingLocation() {
         return bookingLocation;
     }
+
+    @Override
+    public String toString() {
+        return bookingLocation;
+    }
 }
