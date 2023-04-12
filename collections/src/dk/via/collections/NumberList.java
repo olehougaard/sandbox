@@ -20,12 +20,12 @@ public class NumberList {
     }
 
     public double get(int index) {
-        if (isEmpty()) throw new ArrayIndexOutOfBoundsException("Out of bounds");
+        if (index >= size()) throw new ArrayIndexOutOfBoundsException("Out of bounds");
         return elements.get(index);
     }
 
     public double remove(int index) {
-        if (isEmpty()) throw new ArrayIndexOutOfBoundsException("Out of bounds");
+        if (index >= size()) throw new ArrayIndexOutOfBoundsException("Out of bounds");
         return elements.remove(index);
     }
 

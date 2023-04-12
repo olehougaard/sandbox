@@ -99,4 +99,19 @@ class NumberListTest {
         list.add(.5);
         assertEquals(3.5, list.sum());
     }
+
+    @Test
+    void getting_beyond_the_end_of_the_list_throws() {
+        list.add(3);
+        list.add(.5);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(2));
+    }
+
+    @Test
+    void removing_beyond_the_end_of_the_list_throws() {
+        list.add(3);
+        list.add(.5);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.remove(2));
+    }
+
 }
