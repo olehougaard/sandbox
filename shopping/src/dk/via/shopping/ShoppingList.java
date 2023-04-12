@@ -2,8 +2,6 @@ package dk.via.shopping;
 
 import java.util.ArrayList;
 
-record ListItem(String name, int amount) {}
-
 public class ShoppingList {
     private final ArrayList<ListItem> items;
     private double totalCost;
