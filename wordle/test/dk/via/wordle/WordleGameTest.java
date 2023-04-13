@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WordleGameTest {
     private Dictionary dictionary;
-    private WordleGame game;
 
     @BeforeEach
     void setUp() throws RemoteException {
@@ -21,19 +20,19 @@ class WordleGameTest {
 
     @Test
     void too_short_words_are_not_allowed_as_guesses() throws RemoteException {
-        game = new WordleGame(5, dictionary);
+        WordleGame game = new WordleGame(5, dictionary);
         assertThrows(IllegalArgumentException.class, () -> game.guess("ABCD"));
     }
 
     @Test
     void too_long_words_are_not_allowed_as_guesses() throws RemoteException {
-        game = new WordleGame(5, dictionary);
+        WordleGame game = new WordleGame(5, dictionary);
         assertThrows(IllegalArgumentException.class, () -> game.guess("ABCDEF"));
     }
 
     @Test
     void the_server_isnt_called_if_words_have_wrong_length() throws RemoteException {
-        game = new WordleGame(5, dictionary);
+        WordleGame game = new WordleGame(5, dictionary);
         assertThrows(IllegalArgumentException.class, () -> game.guess("ABCD"));
         assertThrows(IllegalArgumentException.class, () -> game.guess("ABCDEF"));
         Mockito.verify(dictionary, Mockito.never()).lookup(Mockito.anyString());
@@ -42,7 +41,7 @@ class WordleGameTest {
     @Test
     void unknown_words_are_not_allowed_as_guesses() throws RemoteException {
         Mockito.when(dictionary.lookup(Mockito.anyString())).thenReturn(false);
-        game = new WordleGame(5, dictionary);
+        WordleGame game = new WordleGame(5, dictionary);
         UnknownWordException exception = assertThrows(UnknownWordException.class, () -> game.guess("CCCCC"));
         assertEquals("CCCCC", exception.getMessage());
     }
@@ -51,7 +50,7 @@ class WordleGameTest {
     void unused_letters_return_as_misses() throws RemoteException {
         Mockito.when(dictionary.randomWord(5)).thenReturn("ABCCD");
         Mockito.when(dictionary.lookup("XXXXX")).thenReturn(true);
-        game = new WordleGame(5, dictionary);
+        WordleGame game = new WordleGame(5, dictionary);
         assertIterableEquals(List.of(MISS, MISS, MISS, MISS, MISS), game.guess("XXXXX"));
     }
 
@@ -59,7 +58,7 @@ class WordleGameTest {
     void correct_letters_in_wrong_place_return_as_wrong_place() throws RemoteException {
         Mockito.when(dictionary.randomWord(5)).thenReturn("ABCCD");
         Mockito.when(dictionary.lookup("XABXX")).thenReturn(true);
-        game = new WordleGame(5, dictionary);
+        WordleGame game = new WordleGame(5, dictionary);
         assertIterableEquals(List.of(MISS, WRONG_PLACE, WRONG_PLACE, MISS, MISS), game.guess("XABXX"));
     }
 
@@ -67,7 +66,7 @@ class WordleGameTest {
     void correcty_placed_letters_return_as_correct() throws RemoteException {
         Mockito.when(dictionary.randomWord(5)).thenReturn("ABCCD");
         Mockito.when(dictionary.lookup("ABXXX")).thenReturn(true);
-        game = new WordleGame(5, dictionary);
+        WordleGame game = new WordleGame(5, dictionary);
         assertIterableEquals(List.of(CORRECT, CORRECT, MISS, MISS, MISS), game.guess("ABXXX"));
     }
 
@@ -75,7 +74,7 @@ class WordleGameTest {
     void correct_overrides_wrong_place() throws RemoteException {
         Mockito.when(dictionary.randomWord(5)).thenReturn("ABCCD");
         Mockito.when(dictionary.lookup("XXXCX")).thenReturn(true);
-        game = new WordleGame(5, dictionary);
+        WordleGame game = new WordleGame(5, dictionary);
         assertIterableEquals(List.of(MISS, MISS, MISS, CORRECT, MISS), game.guess("XXXCX"));
     }
 }
