@@ -3,13 +3,14 @@ package dk.via.wordle;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Random;
 
 public class FakeRandomDictionary implements Dictionary {
     private final HashSet<String> words;
 
     public FakeRandomDictionary(String... words) {
-        this.words = new HashSet<>(Arrays.asList(words));
+        this.words = new LinkedHashSet<>(Arrays.asList(words));
     }
 
     @Override
