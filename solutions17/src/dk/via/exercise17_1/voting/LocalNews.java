@@ -3,7 +3,7 @@ package dk.via.exercise17_1.voting;
 import dk.via.exercise17_1.access.ElectionAccessManager;
 import dk.via.exercise17_1.election.Election;
 
-public class LocalNews {
+public class LocalNews implements Reporter {
     private final ElectionAccessManager accessManager;
     private final String county;
 

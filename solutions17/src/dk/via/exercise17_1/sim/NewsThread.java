@@ -1,15 +1,14 @@
 package dk.via.exercise17_1.sim;
 
-import dk.via.exercise17_1.access.ElectionAccessManager;
-import dk.via.exercise17_1.voting.News;
+import dk.via.exercise17_1.voting.Reporter;
 
 import java.util.Random;
 
 public class NewsThread extends Thread {
-    private final News news;
+    private final Reporter reporter;
 
-    public NewsThread(ElectionAccessManager accessManager) {
-        news = new News(accessManager);
+    public NewsThread(Reporter reporter) {
+        this.reporter = reporter;
     }
 
     @SuppressWarnings({"BusyWait"})
@@ -19,7 +18,7 @@ public class NewsThread extends Thread {
             Random random = new Random();
             Thread.sleep(random.nextInt(1000));
             while(true) {
-                boolean isOpen = news.report();
+                boolean isOpen = reporter.report();
                 if (!isOpen) break;
                 Thread.sleep(1000);
             }
